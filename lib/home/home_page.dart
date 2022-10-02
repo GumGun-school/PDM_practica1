@@ -46,10 +46,13 @@ class HomePage extends StatelessWidget {
               try {
                 info = await context.read<ListenButton>().recieveSong(song!);
               } catch (err) {}
-              if (!info.isEmpty) {
+              if (info["result"]!=null) {
+                
+                print(info);
                 var assembled =
                     await context.read<ListenButton>().parseResponse(info);
 
+                print(assembled);
                 context.read<FavButton>().startFromListener();
                 Navigator.push(
                   context,
