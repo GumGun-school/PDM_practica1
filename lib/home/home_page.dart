@@ -46,7 +46,7 @@ class HomePage extends StatelessWidget {
               try {
                 info = await context.read<ListenButton>().recieveSong(song!);
               } catch (err) {}
-              if (info.isEmpty) {
+              if (!info.isEmpty) {
                 var assembled =
                     await context.read<ListenButton>().parseResponse(info);
 
