@@ -19,10 +19,17 @@ dependencies:
   firebase_auth:
   google_sign_in:
   cloud_firestore:
+  
 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: 
+  
+flutter_icons:
+  android: true
+  image_path: "assets/icon/icon.png"
+
 flutter:
   uses-material-design: true
