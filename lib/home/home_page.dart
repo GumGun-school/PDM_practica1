@@ -1,8 +1,11 @@
 import 'package:avatar_glow/avatar_glow.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:practica1/home/provider/listen_button.dart';
 import 'package:practica1/list/song_list.dart';
+import 'package:practica1/login/login.dart';
 import 'package:provider/provider.dart';
 
 import '../banner/provider/fav_button.dart';
@@ -46,8 +49,7 @@ class HomePage extends StatelessWidget {
               try {
                 info = await context.read<ListenButton>().recieveSong(song!);
               } catch (err) {}
-              if (info["result"]!=null) {
-                
+              if (info["result"] != null) {
                 print(info);
                 var assembled =
                     await context.read<ListenButton>().parseResponse(info);
@@ -97,6 +99,31 @@ class HomePage extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => SongList(),
+                ),
+              );
+            },
+            child: Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                color: Color.fromRGBO(255, 255, 255, 1),
+                shape: BoxShape.circle,
+              ),
+              child: Center(
+                child: FaIcon(
+                  Icons.favorite,
+                  color: Color.fromRGBO(0, 0, 0, 1),
+                ),
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () async {
+              await FirebaseAuth.instance.signOut();
+              await GoogleSignIn().signOut();
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (context) => login(),
                 ),
               );
             },
