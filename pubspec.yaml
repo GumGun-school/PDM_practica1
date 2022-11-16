@@ -15,6 +15,12 @@ dependencies:
   http:
   path_provider:
   url_launcher:
+  firebase_core: ^2.2.0
+  firebase_auth:
+  google_sign_in:
+  cloud_firestore:
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

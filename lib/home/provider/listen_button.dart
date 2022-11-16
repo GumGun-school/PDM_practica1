@@ -67,7 +67,7 @@ class ListenButton with ChangeNotifier {
       },
       body: jsonEncode(
         <String, dynamic>{
-          'api_token': 'bec0a20feec12528f6425d3e11cb16c9',
+          'api_token': 'f0b9cd4803d7e55b0cc9cb798c0bbc6e',
           'return': 'apple_music,spotify',
           'audio': finalFile,
           'method': 'recognize',
