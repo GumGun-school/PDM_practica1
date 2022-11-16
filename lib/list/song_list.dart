@@ -7,6 +7,8 @@ import 'package:provider/provider.dart';
 class SongList extends StatelessWidget {
   SongList({Key? key}) : super(key: key);
 
+  
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +26,8 @@ class SongList extends StatelessWidget {
                   Navigator.pop(context);
                 },
                 icon: FaIcon(FontAwesomeIcons.arrowLeft),
-              )
+              ),
+              Text("faved Songs")
             ],
           ),
           _songArea(context),

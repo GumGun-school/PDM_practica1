@@ -1,9 +1,12 @@
 import 'dart:ui';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:practica1/home/home_page.dart';
+import 'package:practica1/provider/song_list_prov.dart';
+import 'package:provider/provider.dart';
 
 class login extends StatelessWidget {
   login({super.key});
@@ -13,9 +16,6 @@ class login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Sample Code'),
-      ),
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -29,18 +29,34 @@ class login extends StatelessWidget {
         child: BackdropFilter(
           filter: new ImageFilter.blur(sigmaX: 3.0, sigmaY: 3.0),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Row(
                 mainAxisSize: MainAxisSize.max,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: ElevatedButton(
-                  onPressed: () {
-                    signInWithGoogle(context);
-                  },
-                  child: Text("hola"),
-                ),
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: ElevatedButton(
+                      style: ButtonStyle(backgroundColor: MaterialStatePropertyAll<Color>(Colors.white)),
+                      onPressed: () {
+                        signInWithGoogle(context);
+                      },
+                      child: Row(
+                        children: [
+                          Image.network(
+                            "https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-suite-everything-you-need-know-about-google-newest-0.png",
+                            width: 25,
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text("LogIn with google"),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -66,11 +82,21 @@ class login extends StatelessWidget {
     // Once signed in, return the UserCredential
     return await FirebaseAuth.instance
         .signInWithCredential(credential)
-        .then((value) => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => HomePage(),
-              ),
-            ));
+        .then((value) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => HomePage(),
+        ),
+      );
+
+      FirebaseFirestore.instance.collection('users').doc(value.user!.uid).set(
+          {'email': value.user!.email, 'uid': value.user!.uid},
+          SetOptions(merge: true));
+
+      print(value.user!.email);
+
+      Provider.of<SongListProv>(context, listen: false).getSongs();
+    });
   }
 }

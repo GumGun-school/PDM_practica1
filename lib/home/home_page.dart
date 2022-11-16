@@ -93,54 +93,60 @@ class HomePage extends StatelessWidget {
           SizedBox(
             height: 90,
           ),
-          GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => SongList(),
-                ),
-              );
-            },
-            child: Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(
-                color: Color.fromRGBO(255, 255, 255, 1),
-                shape: BoxShape.circle,
-              ),
-              child: Center(
-                child: FaIcon(
-                  Icons.favorite,
-                  color: Color.fromRGBO(0, 0, 0, 1),
-                ),
-              ),
-            ),
-          ),
-          GestureDetector(
-            onTap: () async {
-              await FirebaseAuth.instance.signOut();
-              await GoogleSignIn().signOut();
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                  builder: (context) => login(),
-                ),
-              );
-            },
-            child: Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(
-                color: Color.fromRGBO(255, 255, 255, 1),
-                shape: BoxShape.circle,
-              ),
-              child: Center(
-                child: FaIcon(
-                  Icons.favorite,
-                  color: Color.fromRGBO(0, 0, 0, 1),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SongList(),
+                    ),
+                  );
+                },
+                child: Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: Color.fromRGBO(255, 255, 255, 1),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Center(
+                    child: FaIcon(
+                      Icons.favorite,
+                      color: Color.fromRGBO(0, 0, 0, 1),
+                    ),
+                  ),
                 ),
               ),
-            ),
+              SizedBox(width: 30),
+              GestureDetector(
+                onTap: () async {
+                  await FirebaseAuth.instance.signOut();
+                  await GoogleSignIn().signOut();
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                      builder: (context) => login(),
+                    ),
+                  );
+                },
+                child: Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: Color.fromRGBO(255, 255, 255, 1),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Center(
+                    child: FaIcon(
+                      Icons.logout_sharp,
+                      color: Color.fromRGBO(0, 0, 0, 1),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),
